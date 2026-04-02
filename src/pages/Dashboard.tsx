@@ -22,10 +22,10 @@ export function Dashboard() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 10 }}>
           <div>
             <p className="input-label" style={{ color: 'var(--primary)' }}>
-              {user.role === 'coach' ? 'Coach' : 'Rider'}
+              {user.role === 'coach' ? 'Kouč' : 'Biker'}
             </p>
             <h2 style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>
-              Hello, {user.first_name}!
+              Ahoj, {user.first_name}!
             </h2>
           </div>
           <button onClick={logout} className="btn" style={{ padding: '0.5rem', background: 'rgba(255,255,255,0.1)', border: '1px solid var(--border)', backdropFilter: 'blur(4px)' }}>
@@ -126,7 +126,7 @@ function CoachDashboard() {
   return (
     <div className="stagger-1">
       <h3 style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between' }}>
-        My Courses
+        Moje kurzy
         {activeSeason && <span style={{ fontSize: '0.8rem', fontWeight: 'normal', color: 'var(--primary)', background: 'rgba(79,70,229,0.1)', padding: '0.2rem 0.6rem', borderRadius: 'var(--radius-full)' }}>{activeSeason.name}</span>}
       </h3>
       
