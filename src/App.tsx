@@ -20,15 +20,15 @@ const BottomNav = () => {
     <nav className="bottom-nav">
       <Link to="/dashboard" className={`nav-item ${path === '/dashboard' || path.includes('/courses') ? 'active' : ''}`}>
         <Home size={24} />
-        <span>Home</span>
+        <span>Domů</span>
       </Link>
       <Link to="/shop" className={`nav-item ${path.includes('/shop') ? 'active' : ''}`}>
         <ShoppingBag size={24} />
-        <span>Shop</span>
+        <span>Obchod</span>
       </Link>
       <Link to="/scoreboard" className={`nav-item ${path.includes('/scoreboard') ? 'active' : ''}`}>
         <Trophy size={24} />
-        <span>Scores</span>
+        <span>Skóre</span>
       </Link>
     </nav>
   );

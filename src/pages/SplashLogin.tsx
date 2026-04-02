@@ -101,7 +101,7 @@ export function SplashLogin() {
             cursor: 'pointer'
           }}
         >
-          Rider (PIN)
+          Biker (PIN)
         </button>
         <button 
           type="button"
@@ -119,7 +119,7 @@ export function SplashLogin() {
             cursor: 'pointer'
           }}
         >
-          Coach
+          Kouč
         </button>
       </div>
 
@@ -136,7 +136,7 @@ export function SplashLogin() {
           <>
             <div className="input-group">
               <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Lock size={16} /> Enter your 4-digit PIN
+                <Lock size={16} /> Vlož svůj 4-místný pin
               </label>
               <input 
                 type="password" 
@@ -167,7 +167,7 @@ export function SplashLogin() {
               />
             </div>
             <div className="input-group">
-              <label className="input-label">Password</label>
+              <label className="input-label">Heslo</label>
               <input 
                 type="password" 
                 className="input-field" 
@@ -185,7 +185,7 @@ export function SplashLogin() {
           style={{ width: '100%', marginTop: '0.5rem', padding: '1rem' }}
           disabled={isSubmitLoading}
         >
-          {isSubmitLoading ? 'Loading...' : (isKidMode ? 'Let\'s Ride!' : 'Login to Dashboard')}
+          {isSubmitLoading ? 'Loading...' : (isKidMode ? 'Jdeme shredit!' : 'Přihlášení')}
           {!isSubmitLoading && <LogIn size={20} />}
         </button>
         
