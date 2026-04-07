@@ -129,6 +129,49 @@ export interface Database {
           }
         ]
       }
+      kid_skills: {
+        Row: {
+          coach_id: string
+          created_at: string | null
+          id: string
+          kid_id: string
+          skill_id: string
+        }
+        Insert: {
+          coach_id: string
+          created_at?: string | null
+          id?: string
+          kid_id: string
+          skill_id: string
+        }
+        Update: {
+          coach_id?: string
+          created_at?: string | null
+          id?: string
+          kid_id?: string
+          skill_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "kid_skills_coach_id_fkey"
+            columns: ["coach_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "kid_skills_kid_id_fkey"
+            columns: ["kid_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "kid_skills_skill_id_fkey"
+            columns: ["skill_id"]
+            referencedRelation: "skills"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       merch_items: {
         Row: {
           cost: number
@@ -250,6 +293,27 @@ export interface Database {
           created_at?: string | null
           id?: string
           is_active?: boolean | null
+          name?: string
+        }
+        Relationships: []
+      }
+      skills: {
+        Row: {
+          created_at: string | null
+          flowcoins_reward: number
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string | null
+          flowcoins_reward: number
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string | null
+          flowcoins_reward?: number
+          id?: string
           name?: string
         }
         Relationships: []

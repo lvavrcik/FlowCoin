@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Home, ShoppingBag, Trophy } from 'lucide-react';
+import { Home, ShoppingBag, Trophy, Target } from 'lucide-react';
 
 import { SplashLogin } from './pages/SplashLogin';
 import { Dashboard } from './pages/Dashboard';
 import { Shop } from './pages/Shop';
 import { Scoreboard } from './pages/Scoreboard';
 import { CourseDetail } from './pages/CourseDetail';
+import { Skills } from './pages/Skills';
 import { useAuth } from './contexts/AuthContext';
 
 // Navigation Component
@@ -21,6 +22,10 @@ const BottomNav = () => {
       <Link to="/dashboard" className={`nav-item ${path === '/dashboard' || path.includes('/courses') ? 'active' : ''}`}>
         <Home size={24} />
         <span>Domů</span>
+      </Link>
+      <Link to="/dovednosti" className={`nav-item ${path.includes('/dovednosti') ? 'active' : ''}`}>
+        <Target size={24} />
+        <span>Dovednosti</span>
       </Link>
       <Link to="/shop" className={`nav-item ${path.includes('/shop') ? 'active' : ''}`}>
         <ShoppingBag size={24} />
@@ -46,6 +51,7 @@ function App() {
           <Route path="/courses/:id" element={user ? <CourseDetail /> : <SplashLogin />} />
           <Route path="/shop" element={user ? <Shop /> : <SplashLogin />} />
           <Route path="/scoreboard" element={user ? <Scoreboard /> : <SplashLogin />} />
+          <Route path="/dovednosti" element={user ? <Skills /> : <SplashLogin />} />
         </Routes>
         <BottomNav />
       </div>
