@@ -91,11 +91,7 @@ export function Scoreboard() {
     <div className="page-container animate-slide-up">
       <div style={{ textAlign: 'center', marginBottom: '2rem', marginTop: '1rem' }} className="stagger-1">
         <Trophy size={48} color="var(--accent)" style={{ margin: '0 auto 1rem auto', filter: 'drop-shadow(0 0 15px rgba(245,158,11,0.5))' }} />
-        <h2 style={{ fontSize: '2rem', marginBottom: '0.25rem' }}>Leaderboard</h2>
-        <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', color: 'var(--text-muted)' }}>
-          <Users size={16} /> 
-          Top riders in your courses
-        </p>
+        <h2 style={{ fontSize: '2rem', marginBottom: '0.25rem' }}>Žebříček bikerů</h2>
       </div>
 
       <div className="glass-panel stagger-2" style={{ padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

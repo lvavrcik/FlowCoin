@@ -35,7 +35,7 @@ export function Dashboard() {
 
         {user.role === 'kid' && (
           <div style={{ marginTop: '1rem', background: 'rgba(0,0,0,0.2)', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
-            <p className="input-label" style={{ marginBottom: '0.25rem' }}>Your FlowCoins</p>
+            <p className="input-label" style={{ marginBottom: '0.25rem' }}>Tvoje FlowCoiny</p>
             <div style={{ fontSize: '3rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-main)', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
               <span className="coin-icon" style={{ width: '0.8em', height: '0.8em' }}>F</span>
               {user.flowcoins_balance || 0}
@@ -48,14 +48,14 @@ export function Dashboard() {
                 style={{ flex: 1, padding: '0.5rem' }}
                 onClick={() => setShowQR(prev => !prev)}
               >
-                <QrCode size={16} /> My QR
+                <QrCode size={16} /> Můj QR kód
               </button>
               <button 
                 className="btn btn-accent" 
                 style={{ flex: 1, padding: '0.5rem' }}
                 onClick={() => window.location.href = '/shop'}
               >
-                Shop Now
+                Obchod
               </button>
             </div>
           </div>
@@ -147,7 +147,7 @@ function CoachDashboard() {
               <div>
                 <h4 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>{course.name}</h4>
                 {/* Normally we'd join with enrollments to get a count, for now just a placeholder */}
-                <p style={{ fontSize: '0.875rem' }}>Tap to view riders</p>
+                <p style={{ fontSize: '0.875rem' }}>Náhled</p>
               </div>
               <button className="btn btn-secondary" style={{ padding: '0.5rem', borderRadius: '50%' }} tabIndex={-1}>
                 <ArrowRight size={20} />

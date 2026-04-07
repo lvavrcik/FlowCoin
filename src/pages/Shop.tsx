@@ -103,7 +103,7 @@ export function Shop() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ fontSize: '1.8rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <ShoppingCart size={24} color="var(--primary)" />
-          Merch Shop
+          Obchod
         </h2>
         {user?.role === 'kid' && (
           <div className="coin-display" style={{ fontSize: '1.25rem' }}>
@@ -115,7 +115,7 @@ export function Shop() {
       {user?.role === 'coach' && pendingPurchases.length > 0 && (
         <div className="card" style={{ borderLeft: '4px solid var(--accent)', marginBottom: '1rem' }}>
           <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-            <PackageOpen size={18} color="var(--accent)" /> Pending Orders
+            <PackageOpen size={18} color="var(--accent)" /> Nevyřízené objednávky
           </h3>
           <div style={{ display: 'grid', gap: '0.5rem' }}>
             {pendingPurchases.map(p => (
@@ -125,7 +125,7 @@ export function Shop() {
                   <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>{p.merch_items?.name}</p>
                 </div>
                 <button className="btn btn-secondary" onClick={() => fulfillPurchase(p.id)} style={{ padding: '0.5rem' }}>
-                  <Check size={16} color="var(--secondary)" /> Handed over
+                  <Check size={16} color="var(--secondary)" /> Vyřízeno
                 </button>
               </div>
             ))}
@@ -164,7 +164,7 @@ export function Shop() {
                   className={`btn ${liveBalance >= item.cost ? 'btn-primary' : 'btn-secondary'}`}
                   style={{ padding: '0.4rem 0.8rem', fontSize: '0.875rem' }}
                 >
-                  {buyingId === item.id ? '...' : (item.stock === 0 ? 'Sold Out' : 'Buy')}
+                  {buyingId === item.id ? '...' : (item.stock === 0 ? 'Sold Out' : 'Nákup')}
                 </button>
               )}
             </div>
