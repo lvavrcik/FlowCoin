@@ -13,9 +13,6 @@ import { useAuth } from './contexts/AuthContext';
 const BottomNav = () => {
   const location = useLocation();
   const path = location.pathname;
-  
-  // Hide nav on splash screen
-  if (path === '/') return null;
 
   return (
     <nav className="bottom-nav">
@@ -53,7 +50,7 @@ function App() {
           <Route path="/scoreboard" element={user ? <Scoreboard /> : <SplashLogin />} />
           <Route path="/dovednosti" element={user ? <Skills /> : <SplashLogin />} />
         </Routes>
-        <BottomNav />
+        {user && <BottomNav />}
       </div>
     </BrowserRouter>
   );
