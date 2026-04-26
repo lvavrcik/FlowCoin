@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import type { Database } from '../lib/database.types';
-import { Trophy, Medal, Users } from 'lucide-react';
+import { Trophy, Medal } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 type Profile = Database['public']['Tables']['profiles']['Row'];

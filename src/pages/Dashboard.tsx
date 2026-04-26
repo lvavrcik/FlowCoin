@@ -4,7 +4,7 @@ import { LogOut, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { Database } from '../lib/database.types';
 
-type Season = Database['public']['Tables']['seasons']['Row'];
+
 type Course = Database['public']['Tables']['courses']['Row'];
 
 export function Dashboard() {
@@ -67,7 +67,7 @@ import { useNavigate } from 'react-router-dom';
 function CoachDashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [activeSeason, setActiveSeason] = useState<Season | null>(null);
+
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   
@@ -85,7 +85,7 @@ function CoachDashboard() {
         .single();
         
       if (seasonData) {
-        setActiveSeason(seasonData);
+
         // Get courses for this coach in this season using the new join table
         const { data: cols } = await supabase
           .from('course_coaches')

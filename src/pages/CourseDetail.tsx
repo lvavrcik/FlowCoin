@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
 import type { Database } from '../lib/database.types';
-import { ArrowLeft, UserPlus, FileEdit } from 'lucide-react';
+import { ArrowLeft, FileEdit } from 'lucide-react';
 import { ActionPanel } from './ActionPanel';
 
 type KidProfile = Database['public']['Tables']['profiles']['Row'];
