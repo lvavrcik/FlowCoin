@@ -83,9 +83,6 @@ export function CourseDetail() {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
         <h3 style={{ fontSize: '1.1rem', color: 'var(--text-muted)' }}>Bikeři ({kids.length})</h3>
-        <button className="btn" style={{ background: 'transparent', padding: '0.25rem', color: 'var(--primary)', border: 'none', display: 'flex', gap: '0.25rem', alignItems: 'center', fontSize: '0.875rem' }}>
-          <UserPlus size={16} /> Manage
-        </button>
       </div>
 
       <div className="glass-panel" style={{ display: 'flex', flexDirection: 'column' }}>

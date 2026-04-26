@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { LogOut, QrCode, ArrowRight } from 'lucide-react';
+import { LogOut, ArrowRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import type { Database } from '../lib/database.types';
 
@@ -9,7 +9,7 @@ type Course = Database['public']['Tables']['courses']['Row'];
 
 export function Dashboard() {
   const { user, logout } = useAuth();
-  const [showQR, setShowQR] = useState(false);
+
 
   if (!user) return null;
 
@@ -43,13 +43,7 @@ export function Dashboard() {
             
             
             <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-              <button 
-                className="btn btn-primary" 
-                style={{ flex: 1, padding: '0.5rem' }}
-                onClick={() => setShowQR(prev => !prev)}
-              >
-                <QrCode size={16} /> Můj QR kód
-              </button>
+
               <button 
                 className="btn btn-accent" 
                 style={{ flex: 1, padding: '0.5rem' }}
@@ -62,15 +56,12 @@ export function Dashboard() {
         )}
       </div>
 
-      {user.role === 'kid' && showQR && <KidQRDisplay kidId={user.id} name={user.first_name} />}
       {user.role === 'coach' ? <CoachDashboard /> : <KidDashboard kidId={user.id} />}
     </div>
   );
 }
 
-import { CoachScanner } from './CoachScanner';
-import { ActionPanel } from './ActionPanel';
-import { KidQRDisplay } from './KidQRDisplay';
+
 import { useNavigate } from 'react-router-dom';
 
 function CoachDashboard() {
@@ -80,9 +71,7 @@ function CoachDashboard() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   
-  // Scanner state
-  const [isScanning, setIsScanning] = useState(false);
-  const [selectedKidId, setSelectedKidId] = useState<string | null>(null);
+
 
   useEffect(() => {
     if (!user) return;
@@ -127,7 +116,6 @@ function CoachDashboard() {
     <div className="stagger-1">
       <h3 style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'space-between' }}>
         Moje kurzy
-        {activeSeason && <span style={{ fontSize: '0.8rem', fontWeight: 'normal', color: 'var(--primary)', background: 'rgba(79,70,229,0.1)', padding: '0.2rem 0.6rem', borderRadius: 'var(--radius-full)' }}>{activeSeason.name}</span>}
       </h3>
       
       {courses.length === 0 ? (
@@ -157,32 +145,7 @@ function CoachDashboard() {
         </div>
       )}
 
-      <div style={{ marginTop: '2rem' }}>
-        <button className="btn btn-primary" style={{ width: '100%', padding: '1rem' }} onClick={() => setIsScanning(true)}>
-          <QrCode size={20} />
-          Scan Rider QR Code
-        </button>
-      </div>
 
-      {isScanning && (
-        <CoachScanner 
-          onScanKid={(kidId) => {
-            setIsScanning(false);
-            setSelectedKidId(kidId);
-          }} 
-          onClose={() => setIsScanning(false)} 
-        />
-      )}
-
-      {selectedKidId && (
-        <ActionPanel 
-          kidId={selectedKidId} 
-          onClose={() => {
-            setSelectedKidId(null);
-            // Optionally could trigger a refresh of course data here if needed
-          }} 
-        />
-      )}
     </div>
   );
 }
@@ -197,7 +160,7 @@ function KidDashboard({ kidId }: { kidId: string }) {
       const { data } = await supabase
         .from('transactions')
         .select(`
-          id, amount, created_at,
+          id, amount, created_at, custom_reason,
           activities (name, icon)
         `)
         .eq('kid_id', kidId)
@@ -213,13 +176,13 @@ function KidDashboard({ kidId }: { kidId: string }) {
 
   return (
     <div className="stagger-1">
-      <h3 style={{ marginBottom: '1rem', fontSize: '1.2rem' }}>Recent Flow</h3>
+      <h3 style={{ marginBottom: '1rem', fontSize: '1.2rem' }}>Poslední aktivita</h3>
       
       {loading ? (
         <p>Loading...</p>
       ) : transactions.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '2rem 1rem', background: 'rgba(0,0,0,0.1)', borderRadius: 'var(--radius-md)' }}>
-           <p>No FlowCoins yet! Keep riding!</p>
+           <p>Zatím nemáš žádné FlowCoiny. Pokračuj v ježdění!</p>
         </div>
       ) : (
         <div style={{ display: 'grid', gap: '0.75rem' }}>
@@ -227,7 +190,7 @@ function KidDashboard({ kidId }: { kidId: string }) {
             <div key={t.id} className="card" style={{ padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderLeft: t.amount > 0 ? '4px solid var(--secondary)' : '4px solid var(--danger)' }}>
                <div>
                  <p style={{ fontWeight: '600', marginBottom: '0.2rem' }}>
-                   {t.activities?.name || 'Manual Adjustment'}
+                   {t.custom_reason || t.activities?.name || 'Manuální úprava'}
                  </p>
                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                    {new Date(t.created_at).toLocaleDateString()}

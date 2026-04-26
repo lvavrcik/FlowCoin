@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Camera, LogIn, Lock } from 'lucide-react';
+import { LogIn, Lock } from 'lucide-react';
 
 export function SplashLogin() {
   const { loginAsCoach, loginAsKid, loading } = useAuth();
@@ -71,9 +71,9 @@ export function SplashLogin() {
           }}>💎</div>
         </div>
         <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', textAlign: 'center', background: 'linear-gradient(to right, #fff, #cbd5e1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-          FlowCoins
+          FlowCoin
         </h1>
-        <p style={{ textAlign: 'center', color: 'var(--text-muted)' }}>The ultimate riding reward system</p>
+        <p style={{ textAlign: 'center', color: 'var(--text-muted)' }}>Bajkuj, sbírej FlowCoiny a užij si odměny!</p>
       </div>
       
       {/* Role Toggle */}
@@ -149,10 +149,7 @@ export function SplashLogin() {
                 style={{ fontSize: '1.5rem', textAlign: 'center', letterSpacing: '1rem' }}
               />
             </div>
-            {/* Future improvement: QR login */}
-            <button type="button" className="btn btn-secondary" style={{ width: '100%', marginBottom: '1.25rem', padding: '0.6rem' }}>
-              <Camera size={18} /> Or scan QR Code
-            </button>
+
           </>
         ) : (
           <>

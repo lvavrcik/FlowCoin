@@ -299,24 +299,34 @@ export interface Database {
       }
       skills: {
         Row: {
+          course_id: string | null
           created_at: string | null
           flowcoins_reward: number
           id: string
           name: string
         }
         Insert: {
+          course_id?: string | null
           created_at?: string | null
           flowcoins_reward: number
           id?: string
           name: string
         }
         Update: {
+          course_id?: string | null
           created_at?: string | null
           flowcoins_reward?: number
           id?: string
           name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "skills_course_id_fkey"
+            columns: ["course_id"]
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       transactions: {
         Row: {

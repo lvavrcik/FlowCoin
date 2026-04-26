@@ -173,7 +173,7 @@ export function Shop() {
 
         {items.length === 0 && (
           <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
-            <p>No merch available yet.</p>
+            <p>Zatím tu nic není. Těš se na doplnění!</p>
           </div>
         )}
       </div>
