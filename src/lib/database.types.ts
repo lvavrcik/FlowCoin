@@ -180,6 +180,7 @@ export interface Database {
           image_url: string | null
           name: string
           stock: number | null
+          purchase_limit: number | null
         }
         Insert: {
           cost: number
@@ -188,6 +189,7 @@ export interface Database {
           image_url?: string | null
           name: string
           stock?: number | null
+          purchase_limit?: number | null
         }
         Update: {
           cost?: number
@@ -196,6 +198,7 @@ export interface Database {
           image_url?: string | null
           name?: string
           stock?: number | null
+          purchase_limit?: number | null
         }
         Relationships: []
       }
