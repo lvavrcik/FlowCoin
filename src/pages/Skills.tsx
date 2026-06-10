@@ -36,6 +36,7 @@ export function Skills() {
   const [kidsCompleted, setKidsCompleted] = useState<Set<string>>(new Set()); 
   const [selectedAction, setSelectedAction] = useState<GeneralAction | null>(null);
   const [recentlyAssignedKids, setRecentlyAssignedKids] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -318,34 +319,19 @@ export function Skills() {
 
       {/* Coach Modal */}
       {(selectedSkill || selectedAction) && user?.role === 'coach' && (
-        <div style={{
-          position: 'fixed',
-          top: 0, left: 0, right: 0, bottom: 0,
-          background: 'rgba(0,0,0,0.8)',
-          display: 'flex',
-          alignItems: 'flex-end',
-          zIndex: 1000
-        }}>
-          <div className="glass-panel animate-slide-up" style={{
-            width: '100%',
-            height: '80vh',
-            borderBottomLeftRadius: 0,
-            borderBottomRightRadius: 0,
-            padding: '1.5rem',
-            display: 'flex',
-            flexDirection: 'column'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        <div className="modal-overlay" onClick={() => { setSelectedSkill(null); setSelectedAction(null); setSearchQuery(''); }}>
+          <div className="glass-panel modal-content animate-slide-up" onClick={(e) => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
               <div>
                 <h3 style={{ fontSize: '1.3rem', marginBottom: '0.25rem' }}>
                   {selectedSkill ? selectedSkill.name : selectedAction?.name}
                 </h3>
-                <p style={{ color: 'var(--text-muted)' }}>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
                   {selectedSkill ? `Přiřadit +${selectedSkill.flowcoins_reward} FlowCoins` : `Transakce: ${selectedAction?.amount! > 0 ? '+' : ''}${selectedAction?.amount} FlowCoins`}
                 </p>
               </div>
               <button 
-                onClick={() => { setSelectedSkill(null); setSelectedAction(null); }}
+                onClick={() => { setSelectedSkill(null); setSelectedAction(null); setSearchQuery(''); }}
                 className="btn btn-secondary"
                 style={{ padding: '0.5rem', borderRadius: '50%' }}
               >
@@ -353,63 +339,84 @@ export function Skills() {
               </button>
             </div>
 
+            {kids.length > 5 && (
+              <input
+                type="text"
+                placeholder="Vyhledat jezdce..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="input-field"
+                style={{ marginBottom: '1rem', padding: '0.5rem 0.8rem', fontSize: '0.95rem' }}
+              />
+            )}
+
             <div style={{ overflowY: 'auto', flex: 1, paddingRight: '0.5rem' }}>
               {kids.length === 0 ? (
                 <p style={{ textAlign: 'center', marginTop: '2rem', color: 'var(--text-muted)' }}>V tomto kurzu nejsou žádní jezdci.</p>
               ) : (
-                kids.map(kid => {
-                  if (selectedSkill) {
-                    const isCompleted = kidsCompleted.has(kid.id);
-                    return (
-                      <div 
-                        key={kid.id}
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          padding: '1rem',
-                          borderBottom: '1px solid var(--border)'
-                        }}
-                      >
-                        <span style={{ fontWeight: 600, fontSize: '1.1rem' }}>{kid.first_name} {kid.last_name}</span>
-                        <button 
-                          className={`btn ${isCompleted ? 'btn-secondary' : 'btn-primary'}`}
-                          disabled={isCompleted}
-                          onClick={() => markSkillCompleted(kid)}
-                          style={{ padding: '0.5rem 1rem' }}
-                        >
-                          {isCompleted ? 'Hotovo' : 'Označit jako hotové'}
-                        </button>
-                      </div>
-                    );
-                  } else if (selectedAction) {
-                    const recentlyAssigned = recentlyAssignedKids.has(kid.id);
-                    const isPositive = selectedAction.amount > 0;
-                    return (
-                      <div 
-                        key={kid.id}
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          padding: '1rem',
-                          borderBottom: '1px solid var(--border)'
-                        }}
-                      >
-                        <span style={{ fontWeight: 600, fontSize: '1.1rem' }}>{kid.first_name} {kid.last_name}</span>
-                        <button 
-                          className={`btn ${recentlyAssigned ? 'btn-secondary' : (isPositive ? 'btn-primary' : 'btn-danger')}`}
-                          disabled={recentlyAssigned}
-                          onClick={() => handleGeneralAction(kid)}
-                          style={{ padding: '0.5rem 1rem', color: recentlyAssigned ? undefined : 'white', background: recentlyAssigned ? undefined : (isPositive ? 'var(--secondary)' : 'var(--danger)') }}
-                        >
-                          {recentlyAssigned ? 'Přiřazeno!' : (isPositive ? 'Přičíst' : 'Odečíst')}
-                        </button>
-                      </div>
-                    );
+                (() => {
+                  const filteredKids = kids.filter(kid => 
+                    `${kid.first_name} ${kid.last_name}`.toLowerCase().includes(searchQuery.toLowerCase())
+                  );
+
+                  if (filteredKids.length === 0) {
+                    return <p style={{ textAlign: 'center', marginTop: '2rem', color: 'var(--text-muted)' }}>Žádný jezdec neodpovídá hledání.</p>;
                   }
-                  return null;
-                })
+
+                  return filteredKids.map(kid => {
+                    if (selectedSkill) {
+                      const isCompleted = kidsCompleted.has(kid.id);
+                      return (
+                        <div 
+                          key={kid.id}
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            padding: '0.75rem 0.5rem',
+                            borderBottom: '1px solid var(--border)'
+                          }}
+                        >
+                          <span style={{ fontWeight: 600, fontSize: '1.05rem' }}>{kid.first_name} {kid.last_name}</span>
+                          <button 
+                            className={`btn ${isCompleted ? 'btn-secondary' : 'btn-primary'}`}
+                            disabled={isCompleted}
+                            onClick={() => markSkillCompleted(kid)}
+                            style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem' }}
+                          >
+                            {isCompleted ? 'Hotovo' : 'Přiřadit'}
+                          </button>
+                        </div>
+                      );
+                    } else if (selectedAction) {
+                      const recentlyAssigned = recentlyAssignedKids.has(kid.id);
+                      const isPositive = selectedAction.amount > 0;
+                      return (
+                        <div 
+                          key={kid.id}
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            padding: '0.75rem 0.5rem',
+                            borderBottom: '1px solid var(--border)'
+                          }}
+                        >
+                          <span style={{ fontWeight: 600, fontSize: '1.05rem' }}>{kid.first_name} {kid.last_name}</span>
+                          <button 
+                            className={`btn ${recentlyAssigned ? 'btn-secondary' : (isPositive ? 'btn-primary' : 'btn-danger')}`}
+                            disabled={recentlyAssigned}
+                            onClick={() => handleGeneralAction(kid)}
+                            style={{ padding: '0.4rem 0.8rem', fontSize: '0.9rem', color: recentlyAssigned ? undefined : 'white', background: recentlyAssigned ? undefined : (isPositive ? 'var(--secondary)' : 'var(--danger)') }}
+                          >
+                            {recentlyAssigned ? 'Přiřazeno!' : (isPositive ? 'Přičíst' : 'Odečíst')}
+                          </button>
+                        </div>
+                      );
+                    }
+                    return null;
+                  });
+                })()
               )}
             </div>
           </div>

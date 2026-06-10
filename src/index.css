@@ -330,3 +330,47 @@ p {
 .stagger-2 { animation-delay: 100ms; }
 .stagger-3 { animation-delay: 150ms; }
 .stagger-4 { animation-delay: 200ms; }
+
+/* Responsive Coach Modals */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: flex-end; /* Bottom sheet on mobile */
+  justify-content: center;
+  z-index: 1000;
+  padding: 0;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 480px; /* Matches app wrapper */
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: 85vh; /* Responsive auto-height */
+  box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 480px) {
+  .modal-overlay {
+    align-items: center; /* Center on desktop */
+    padding: 1rem;
+  }
+  .modal-content {
+    border-radius: var(--radius-lg);
+    max-height: 80vh;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+}
+
