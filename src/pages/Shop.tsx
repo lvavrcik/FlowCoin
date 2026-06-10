@@ -171,27 +171,15 @@ export function Shop() {
           const isSoldOut = item.stock === 0;
 
           return (
-            <div key={item.id} className={`card glass-panel stagger-${(i % 4) + 1}`} style={{ padding: '1rem', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ 
-                width: '100%', 
-                aspectRatio: '1', 
-                background: item.image_url ? `url(${item.image_url}) center/cover` : 'var(--bg-surface-elevated)',
-                borderRadius: 'var(--radius-sm)',
-                marginBottom: '1rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                {!item.image_url && <ShoppingCart size={32} color="var(--text-muted)" opacity={0.5} />}
+            <div key={item.id} className={`card glass-panel stagger-${(i % 4) + 1}`} style={{ padding: '1.25rem 1rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '120px' }}>
+              <div>
+                <h4 style={{ marginBottom: '0.25rem', fontSize: '1.05rem', fontWeight: 600 }}>{item.name}</h4>
+                {item.purchase_limit && item.purchase_limit > 0 && (
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
+                    Limit: {user?.role === 'kid' ? `${alreadyBought}/${item.purchase_limit}` : `${item.purchase_limit} na osobu`}
+                  </p>
+                )}
               </div>
-              
-              <h4 style={{ flex: 1, marginBottom: '0.25rem', fontSize: '1rem' }}>{item.name}</h4>
-
-              {item.purchase_limit && item.purchase_limit > 0 && (
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-                  Limit: {user?.role === 'kid' ? `${alreadyBought}/${item.purchase_limit}` : `${item.purchase_limit} na osobu`}
-                </p>
-              )}
               
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
                 <div className="coin-display" style={{ fontSize: '1.1rem' }}>
