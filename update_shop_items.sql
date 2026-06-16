@@ -16,6 +16,6 @@ INSERT INTO public.merch_items (id, name, cost, stock, purchase_limit, image_url
   (uuid_generate_v4(), 'Odznáček', 10, -1, 1, NULL),
   (uuid_generate_v4(), 'Tyčinka', 15, -1, 3, NULL),
   (uuid_generate_v4(), 'Láhev', 35, -1, 1, NULL),
-  (uuid_generate_v4(), 'Multifunkční šátek', 80, -1, 1, NULL),
-  (uuid_generate_v4(), 'Multitool', 140, -1, 1, NULL), -- Sníženo ze 160 na 140
-  (uuid_generate_v4(), 'Nářadí do řídítek', 175, -1, 1, NULL); -- Sníženo ze 200 na 175
+  (uuid_generate_v4(), 'Multifunkční šátek', 70, -1, 1, NULL), -- Sníženo na 70
+  (uuid_generate_v4(), 'Multitool', 120, -1, 1, NULL), -- Sníženo na 120
+  (uuid_generate_v4(), 'Nářadí do řídítek', 150, -1, 1, NULL); -- Sníženo na 150

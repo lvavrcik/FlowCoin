@@ -1,10 +1,14 @@
--- SQL příkaz pro rychlou úpravu cen dvou produktů v Supabase SQL Editoru
+-- SQL příkaz pro rychlou úpravu cen tří produktů v Supabase SQL Editoru
 -- (Tímto se upraví pouze ceny a nemusíš mazat celý obchod)
 
 UPDATE public.merch_items 
-SET cost = 140 
+SET cost = 70 
+WHERE name = 'Multifunkční šátek';
+
+UPDATE public.merch_items 
+SET cost = 120 
 WHERE name = 'Multitool';
 
 UPDATE public.merch_items 
-SET cost = 175 
+SET cost = 150 
 WHERE name = 'Nářadí do řídítek';
