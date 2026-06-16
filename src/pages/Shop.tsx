@@ -167,7 +167,7 @@ export function Shop() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
         {items.map((item, i) => {
           const alreadyBought = getPurchaseCount(item.id);
-          const hasReachedLimit = item.purchase_limit && item.purchase_limit > 0 && alreadyBought >= item.purchase_limit;
+          const hasReachedLimit = !!(item.purchase_limit && item.purchase_limit > 0 && alreadyBought >= item.purchase_limit);
           const isSoldOut = item.stock === 0;
 
           return (
